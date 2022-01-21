@@ -73,7 +73,7 @@ class InvalidationTrackerConcurrencyTest {
         // 5. Assert that the observer received exactly two invalidation calls.
         val dao = database.sampleDao
         val checkObserver = TestObserver()
-        repeat(CHECK_ITERATIONS) {
+        repeat(CHECK_ITERATIONS) { iteration ->
             val invalidationCount = checkObserver.invalidationCount
             invalidationTracker.addObserver(checkObserver)
             try {
@@ -84,7 +84,7 @@ class InvalidationTrackerConcurrencyTest {
                 invalidationTracker.removeObserver(checkObserver)
             }
             val actualCount = invalidationCount.get()
-            assertEquals(2, actualCount, "iteration $it")
+            assertEquals(2, actualCount, "iteration $iteration")
             invalidationCount.set(0)
         }
     }
